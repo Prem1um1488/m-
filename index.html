@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>𝒞𝒽𝑒𝒶𝓉𝑅𝒾𝓈𝑒 - Приватные Читы</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #000; color: #fff; font-family: 'Orbitron', monospace; overflow-x: hidden; position: relative; cursor: url('https://i.ibb.co/wRW2Smx/snowman-cursor.png'), auto; }
+        .neon-glow { text-shadow: 0 0 10px #00ff88, 0 0 20px #00ff88, 0 0 30px #00ff88; }
+
+        /* Падающий снег — маленький и лёгкий */
+        .snow-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+            overflow: hidden;
+        }
+        .snowflake {
+            position: absolute;
+            top: -10%;
+            color: white;
+            user-select: none;
+            opacity: 0.7;
+            animation: fall linear infinite, sway ease-in-out infinite;
+            font-size: 0.8em; /* Маленький размер снежинок */
+        }
+        @keyframes fall {
+            to { transform: translateY(120vh); }
+        }
+        @keyframes sway {
+            0%, 100% { margin-left: 0; }
+            50% { margin-left: 40px; } /* Меньше качание */
+        }
+
+        /* Дым/туман эффект */
+        .smoke-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            background: radial-gradient(circle at 30% 50%, rgba(100,100,100,0.05) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 80%, rgba(100,100,100,0.05) 0%, transparent 50%),
+                        radial-gradient(circle at 50% 20%, rgba(100,100,100,0.03) 0%, transparent 60%);
+            opacity: 0.6;
+            animation: smoke-move 40s linear infinite;
+        }
+        @keyframes smoke-move {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(100px, -100px); }
+        }
+
+        header { background: linear-gradient(45deg, #000, #111); padding: 80px 20px; text-align: center; }
+        h1 { font-size: 4.5em; font-weight: 900; margin-bottom: 30px; }
+        .subtitle { font-size: 1.6em; opacity: 0.8; margin-bottom: 40px; }
+        .cta { display: inline-block; margin: 40px 0; padding: 20px 50px; background: linear-gradient(45deg, #00ff88, #00cc66); color: #000; text-decoration: none; border-radius: 50px; font-weight: 700; font-size: 1.4em; transition: all 0.3s; box-shadow: 0 0 30px #00ff88; }
+        .cta:hover { transform: scale(1.05); box-shadow: 0 0 50px #00ff88; }
+        nav { background: rgba(0,0,0,0.9); padding: 30px; text-align: center; position: relative; z-index: 10; }
+        nav button {
+            background: none;
+            border: 3px solid #00ff88;
+            color: #00ff88;
+            padding: 15px 40px;
+            margin: 0 20px;
+            cursor: pointer;
+            border-radius: 50px;
+            transition: all 0.3s;
+            font-family: inherit;
+            font-size: 1.3em;
+            font-weight: 700;
+            box-shadow: 0 0 15px #00ff88;
+        }
+        nav button.active {
+            background: #00ff88;
+            color: #000;
+            box-shadow: 0 0 30px #00ff88;
+        }
+        nav button:hover {
+            background: #00ff88;
+            color: #000;
+            box-shadow: 0 0 40px #00ff88;
+            transform: scale(1.05);
+        }
+        .game-icon { width: 120px; height: auto; margin-bottom: 20px; filter: drop-shadow(0 0 20px #ff8800); transition: all 0.3s; }
+        .game-icon:hover { filter: drop-shadow(0 0 40px #ff8800); transform: scale(1.1); }
+        .roblox-icon { filter: drop-shadow(0 0 20px #ff0040); }
+        .pubg-icon { filter: drop-shadow(0 0 20px #00ffff); }
+        section { padding: 80px 20px; min-height: 100vh; display: none; position: relative; z-index: 5; }
+        section.active { display: block; }
+        .game-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 50px; max-width: 1400px; margin: 0 auto; position: relative; z-index: 5; }
+        .game-card { background: rgba(17,17,17,0.8); padding: 40px; border-radius: 25px; border: 2px solid #333; transition: all 0.3s; backdrop-filter: blur(10px); text-align: center; cursor: pointer; position: relative; overflow: hidden; }
+        .game-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.5s;
+            pointer-events: none;
+        }
+        .game-card:hover::before {
+            opacity: 1;
+        }
+        .game-card:hover { border-color: #00ff88; box-shadow: 0 0 40px #00ff88; transform: translateY(-15px); }
+        .features-list { text-align: left; font-size: 1.2em; line-height: 1.8em; margin: 30px 0; padding: 20px; background: rgba(0,255,136,0.05); border-radius: 15px; border: 1px solid #00ff88; }
+        .price-box { margin: 30px 0; font-size: 1.6em; line-height: 2em; }
+        .buy-btn { display: block; width: 100%; max-width: 500px; margin: 20px auto; padding: 20px; background: linear-gradient(45deg, #ff0040, #cc0033); color: #fff; text-decoration: none; border-radius: 15px; font-weight: 700; font-size: 1.3em; }
+        .buy-btn:hover { box-shadow: 0 0 40px #ff0040; }
+        .free { color: #00ff88; font-size: 2.8em; font-weight: bold; margin: 40px 0; }
+        .config-block { margin: 50px 0; padding: 30px; background: linear-gradient(45deg, rgba(0,255,136,0.1), rgba(0,0,0,0.8)); border-radius: 20px; border: 2px solid #00ff88; text-align: center; font-size: 1.4em; }
+        .config-block a { color: #00ff88; text-decoration: underline; }
+        .menu-btn { display: block; width: 100%; max-width: 700px; margin: 50px auto; padding: 30px; background: linear-gradient(45deg, #00ff88, #00cc66); color: #000; text-decoration: none; border-radius: 20px; font-weight: 700; font-size: 1.8em; box-shadow: 0 0 40px #00ff88; transition: all 0.3s; }
+        .menu-btn:hover { transform: scale(1.05); box-shadow: 0 0 60px #00ff88; }
+        .video-btn { display: block; width: 100%; max-width: 700px; margin: 30px auto; padding: 20px; background: linear-gradient(45deg, #0066ff, #0033cc); color: #fff; text-decoration: none; border-radius: 15px; font-weight: 700; font-size: 1.4em; }
+        .video-btn:hover { box-shadow: 0 0 40px #0066ff; }
+        .search-bar { width: 100%; max-width: 600px; margin: 20px auto 40px; padding: 15px; background: rgba(255,255,255,0.1); border: 2px solid #00ff88; border-radius: 50px; color: #fff; font-size: 1.2em; text-align: center; outline: none; }
+        .search-bar::placeholder { color: rgba(255,255,255,0.6); }
+        .hidden { display: none !important; }
+        .in-dev { text-align: center; font-size: 1.8em; margin: 80px 0 40px; padding: 40px; background: rgba(0,255,136,0.1); border-radius: 20px; border: 2px solid #00ff88; }
+        footer { background: #111; padding: 40px; text-align: center; opacity: 0.8; font-size: 1.1em; position: relative; z-index: 10; }
+    </style>
+</head>
+<body>
+    <!-- Дым эффект -->
+    <div class="smoke-overlay"></div>
+
+    <!-- Маленький лёгкий снег -->
+    <div class="snow-container" id="snowContainer"></div>
+
+    <header>
+        <h1 class="neon-glow">𝒞𝒽𝑒𝒶𝓉𝑅𝒾𝓈𝑒</h1>
+        <p class="subtitle">Читы для Топовых Игр</p>
+        <a href="https://discord.gg/fVJj46v8" class="cta">Присоединиться в Discord</a>
+        <br><br><small>Поддержка 24/7 в <a href="https://funpay.com/users/17159151/" style="color:#00ff88;">FunPay</a></small>
+    </header>
+    <nav>
+        <button class="active" onclick="showSection('home')">Главная</button>
+        <button onclick="showSection('roblox')">Roblox</button>
+        <button onclick="showSection('blume')">Blume Alkad Rust</button>
+        <button onclick="showSection('zolo')">ZOLO PUBG Mobile</button>
+    </nav>
+    <section id="home" class="active">
+        <div style="text-align:center; max-width:900px; margin:0 auto;">
+            <h2 class="neon-glow">Выбери свою игру</h2>
+            <input type="text" id="searchInput" class="search-bar" placeholder="Поиск игры..." onkeyup="searchGames()">
+        </div>
+        <div class="game-grid" id="gameGrid">
+            <div class="game-card" onclick="showSection('roblox')" data-search="roblox xeno">
+                <img src="https://1000logos.net/wp-content/uploads/2017/09/Roblox-Logo.png" alt="Roblox Logo" class="game-icon roblox-icon">
+                <h3>Roblox - Xeno</h3>
+                <p>Полностью бесплатный и мощный эксплоит для Roblox</p>
+            </div>
+            <div class="game-card" onclick="showSection('blume')" data-search="blume alkad rust">
+                <img src="https://logos-world.net/wp-content/uploads/2021/02/Rust-Logo.png" alt="Rust Logo" class="game-icon">
+                <h3>Blume Alkad Rust</h3>
+                <p>Приватный премиум чит специально для Alkad серверов</p>
+            </div>
+            <div class="game-card" onclick="showSection('zolo')" data-search="pubg mobile zolo">
+                <img src="https://wp.logos-download.com/wp-content/uploads/2021/01/Pubg_Logo.png" alt="PUBG Mobile Logo" class="game-icon pubg-icon" style="width: 200px;">
+                <h3>PUBG Mobile</h3>
+                <p>Утилита ZOLO PUBG Mobile<br>✓ Безопасно<br>✓ Без рут прав<br>✓ Работает на Android 10–14</p>
+            </div>
+        </div>
+        <div class="in-dev neon-glow">
+            <strong>Сейчас в разработке:</strong><br>
+            • Minecraft • PUBG • Roblox Exploits • Valorant • CS2 • И многие другие...
+        </div>
+    </section>
+    <!-- Остальные секции (roblox, blume, zolo) без изменений -->
+    <section id="roblox">
+        <h2 class="neon-glow" style="text-align:center; margin-bottom:40px;">
+            <img src="https://1000logos.net/wp-content/uploads/2017/09/Roblox-Logo.png" alt="Roblox Logo" class="game-icon roblox-icon">
+            <br>Roblox - Xeno Executor
+        </h2>
+        <div class="game-grid">
+            <div class="game-card">
+                <div class="free">СОВЕРШЕННО БЕСПЛАТНО</div>
+                <p style="margin:30px 0; font-size:1.3em;">Скачивай и юзай сколько угодно. Никаких ключей и подписок.</p>
+                <a href="https://discord.gg/fVJj46v8" class="buy-btn">Скачать в Discord</a>
+                <div class="config-block neon-glow">
+                    <strong>Если хотите приватные скрипты (хабы, автофармы, админки и т.д.) — всё там!</strong><br><br>
+                    Заходите в наш <a href="https://discord.gg/fVJj46v8">Discord канал</a> — лучшие приватные Lua скрипты от сообщества!
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="blume">
+        <h2 class="neon-glow" style="text-align:center; margin-bottom:40px;">
+            <img src="https://logos-world.net/wp-content/uploads/2021/02/Rust-Logo.png" alt="Rust Logo" class="game-icon">
+            <br>Blume Alkad Rust Приватный Чит
+        </h2>
+        <div class="game-grid">
+            <div class="game-card">
+                <h3 class="game-title">Все функции Blume Alkad Rust:</h3>
+                <div class="features-list">
+                    <strong>Combat:</strong> FSilent, Draw FOV, Target Line, Power Shoot, Bullet Teleport, Hitchance, Autoshoot, Desync, Instant Hit, Shoot on MaxDesync, Silent Melee, No Recoil, Instant Eoka, No Spread, Force Automatic, Rapid Fire, Auto Reload, Rocket Prediction, Fast Bullets, Jump Shoot<br><br>
+                    <strong>Player ESP:</strong> Box Type, Nickname, Weapon, Distance, Skeletons, Hotbar, Clothing, Sleepers, Flags, NPC, Crosshair, Bullet Tracers, Radar, Static View Model, Player Chams, OOF Indicator + кастомные цвета<br><br>
+                    <strong>World ESP:</strong> Resources, Traps, Collectable, Items, Crate, Vehicles, Dropped Items, No Shoot Animation, Render Icons, Distance Zoom<br><br>
+                    <strong>Local Player:</strong> Always Sprint, Infinite Jump, Spiderman, Fly Indicator, Fly Spoofer, Spinbot, Noclip, Interactive Debug, Speed Hack, Instant Revive, Toggle Layer, Movement Line, Melee Line, Zoom FOV, Custom FOV, Auto Heal, Fast Loot, Suicide, Debug Camera, Aspect Ratio, Battle Mode, Auto Farm Stones, Hit Material<br><br>
+                    <strong>Config & Menu:</strong> Save/Load configs (cloud/shared), Menu Key (INS), Custom colors, Font size, Watermark, Screenshot Save Mode<br><br>
+                    <strong>Friends List:</strong> Добавление друзей (max 15), clear list
+                </div>
+                <a href="https://printskrin.ru/a/aw.kIYbr" target="_blank" class="menu-btn">Нажмите сюда, чтобы увидеть меню чита</a>
+                <div class="config-block neon-glow">
+                    <strong>Хотите готовые конфиги под разные стили игры (legit/rage)?</strong><br><br>
+                    Заходите в наш <a href="https://discord.gg/fVJj46v8">Discord канал</a> — там лучшие cfg от игроков и обновления!
+                </div>
+                <a href="https://www.youtube.com/watch?v=yI_GAPlI4EU" target="_blank" class="video-btn">Смотреть видео демонстрацию Blume</a>
+                <div class="price-box">
+                    <strong>7 дней — 550 руб</strong><br>
+                    <strong>1 месяц — 1080 руб</strong>
+                </div>
+                <a href="https://funpay.com/users/17159151/" class="buy-btn">Купить 7 дней</a>
+                <a href="https://funpay.com/users/17159151/" class="buy-btn">Купить 1 месяц</a>
+                <a href="https://discord.gg/fVJj46v8" class="buy-btn" style="background: linear-gradient(45deg, #00ff88, #00cc66); color:#000;">Скачать конфиги в Discord</a>
+            </div>
+        </div>
+    </section>
+    <section id="zolo">
+        <h2 class="neon-glow" style="text-align:center; margin-bottom:40px;">
+            <img src="https://wp.logos-download.com/wp-content/uploads/2021/01/Pubg_Logo.png" alt="PUBG Mobile Logo" class="game-icon pubg-icon" style="width: 200px;">
+            <br>ZOLO PUBG Mobile
+        </h2>
+        <div class="game-grid">
+            <div class="game-card">
+                <p style="font-size:1.4em; margin:30px 0;">Утилита ZOLO PUBG Mobile<br>
+                ✓ Безопасно<br>
+                ✓ Без рут прав<br>
+                ✓ Работает на Android 10–14</p>
+                <a href="https://www.youtube.com/watch?v=SW36QrpEbjs" target="_blank" class="video-btn">Смотреть видео демонстрацию ZOLO</a>
+                <div class="config-block neon-glow">
+                    <strong>Конфиги и обновления в нашем Discord!</strong><br><br>
+                    Заходите в <a href="https://discord.gg/fVJj46v8">Discord канал</a> за лучшими настройками.
+                </div>
+                <div class="price-box">
+                    <strong>1 день — 210 руб</strong><br>
+                    <strong>3 дня — 460 руб</strong><br>
+                    <strong>7 дней — 850 руб</strong><br>
+                    <strong>14 дней — 1050 руб</strong><br>
+                    <strong>1 месяц — 1650 руб</strong>
+                </div>
+                <a href="https://funpay.com/users/17159151/" class="buy-btn">Купить подписку</a>
+                <a href="https://discord.gg/fVJj46v8" class="buy-btn" style="background: linear-gradient(45deg, #00ff88, #00cc66); color:#000;">Получить в Discord</a>
+            </div>
+        </div>
+    </section>
+    <footer>
+        <p>&copy; 2025 𝒞𝒽𝑒𝒶𝓉𝑅𝒾𝓈𝑒 |
+        <a href="https://discord.gg/fVJj46v8" style="color:#00ff88;">Discord</a> |
+        <a href="https://funpay.com/users/17159151/" style="color:#00ff88;">FunPay</a></p>
+    </footer>
+    <script>
+        function showSection(id) {
+            document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            document.querySelector(`nav button[onclick="showSection('${id}')"]`).classList.add('active');
+            if (id !== 'home') {
+                document.getElementById('searchInput').value = '';
+                searchGames();
+            }
+        }
+        function searchGames() {
+            const input = document.getElementById('searchInput').value.toLowerCase();
+            const cards = document.querySelectorAll('#gameGrid .game-card');
+            cards.forEach(card => {
+                const text = card.getAttribute('data-search').toLowerCase();
+                if (text.includes(input)) {
+                    card.classList.remove('hidden');
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+        }
+
+        // Маленький лёгкий снег (JS генерирует 80 снежинок)
+        const snowContainer = document.getElementById("snowContainer");
+        const symbols = ["•", ".", "*"];
+        for (let i = 0; i < 80; i++) {
+            const snow = document.createElement("div");
+            snow.className = "snowflake";
+            snow.innerText = symbols[Math.floor(Math.random() * symbols.length)];
+            snow.style.left = Math.random() * 100 + "vw";
+            snow.style.animationDuration = (15 + Math.random() * 20) + "s, " + (8 + Math.random() * 10) + "s";
+            snow.style.animationDelay = Math.random() * 15 + "s";
+            snow.style.opacity = 0.4 + Math.random() * 0.4;
+            snowContainer.appendChild(snow);
+        }
+    </script>
+</body>
+</html>
